@@ -20,7 +20,3 @@ def webhook():
 	if request.method == "GET" and "challenge" in request.args:
 		print(" * Nylas connected to the webhook!")
 		return request.args["challenge"]
-		
-# Run our application
-if __name__ == "__main__":
-    app.run()		

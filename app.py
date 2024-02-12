@@ -6,8 +6,6 @@ import os
 from nylas import Client
 import os
 
-load_dotenv()
-
 # Initialize Nylas client
 nylas = Client(
     api_key = os.environ['V3_API_KEY']

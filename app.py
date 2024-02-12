@@ -17,6 +17,11 @@ app = Flask(__name__)
 @app.route("/webhook", methods=['GET', 'POST'])
 def webhook():
 # We are connected to Nylas, let’s give back the challenge
-	if request.method == "GET" and "challenge" in request.args:
-		print(" * Nylas connected to the webhook!")
-		return request.args["challenge"]
+    if request.method == "GET" and "challenge" in request.args:
+        print(" * Nylas connected to the webhook!")
+        return request.args["challenge"]
+
+@app.route("/", methods=['GET'])
+def hello():
+    if request.method == "GET" and "challenge" in request.args:
+        return("Hello")

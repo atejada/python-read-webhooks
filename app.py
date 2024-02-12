@@ -57,8 +57,8 @@ def webhook():
                 event_date = f"From: {start_time} to {end_time}"
             case 'date':
                 event_date = f"On: {event.when.date}" 
-            for participant in event.participants:
-                participant += f"{participant.email};"
+        for participant in event.participants:
+            participant += f"{participant.email};"
                 
         hook = Webhook(event.id, event_date, event.title, event.description, participant[:-1], event.status)
         webhooks.append(hook)

@@ -21,10 +21,5 @@ def webhook():
         print(" * Nylas connected to the webhook!")
         return request.args["challenge"]
 
-@app.route("/", methods=['GET'])
-def hello():
-    if request.method == "GET" and "challenge" in request.args:
-        return("Hello")
-
 if __name__ == "__main__":
     app.run()

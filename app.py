@@ -25,3 +25,6 @@ def webhook():
 def hello():
     if request.method == "GET" and "challenge" in request.args:
         return("Hello")
+
+if __name__ == "__main__":
+    app.run()

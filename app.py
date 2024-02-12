@@ -29,23 +29,23 @@ app = Flask(__name__)
 @app.route("/webhook", methods=['GET', 'POST'])
 def webhook():
 # We are connected to Nylas, let’s give back the challenge
-	if request.method == "GET" and "challenge" in request.args:
-		print(" * Nylas connected to the webhook!")
-		return request.args["challenge"]
+    if request.method == "GET" and "challenge" in request.args:
+        print(" * Nylas connected to the webhook!")
+        return request.args["challenge"]
 
     if request.method == "POST":
         is_genuine = verify_signature(
             message=request.data,
             key=os.environ['CLIENT_SECRET'].encode("utf8"),
             signature=request.headers.get("X-Nylas-Signature")
-	    )
+        )
     
         if not is_genuine:
             return "Signature verification failed!", 401
             
         query_params = {"calendar_id": os.environ['CALENDAR_ID']}
         data = request.get_json()
-        event, _ = nylas.events.find(identifier: os.environ['GRANT_ID'], event_id: data.object.id, query_params: query_params)
+        event, _ = nylas.events.find(identifier = os.environ['GRANT_ID'], event_id = data.object.id, query_params = query_params)
         match event.when.object:
             case 'timespan':
                 start_time = pendulum.from_timestamp(event.when.start_time, today.timezone.name).strftime("%d/%m/%Y at %H:%M:%S")
@@ -54,7 +54,7 @@ def webhook():
             case 'datespan':
                 start_time = pendulum.from_timestamp(event.when.start_date, today.timezone.name).strftime("%d/%m/%Y")
                 end_time = pendulum.from_timestamp(event.when.end_date, today.timezone.name).strftime("%d/%m/%Y")
-				event_date = f"From: {start_time} to {end_time}"
+                event_date = f"From: {start_time} to {end_time}"
             case 'date':
                 event_date = f"On: {event.when.date}" 
             for participant in event.participants:
@@ -71,7 +71,7 @@ def index():
 def verify_signature(message, key, signature):
     digest = hmac.new(key, msg=message, digestmod=hashlib.sha256).hexdigest()
     return hmac.compare_digest(digest, signature)
-		
+        
 # Run our application
 if __name__ == "__main__":
-    app.run()		
+    app.run()       

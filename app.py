@@ -24,6 +24,9 @@ nylas = Client(
     api_key = os.environ['V3_API_KEY']
 )
 
+# Get today’s date
+today = pendulum.now()
+
 # Create the Flask app and load the configuration
 app = Flask(__name__)
 

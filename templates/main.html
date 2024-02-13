@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="bg-green-300 border-green-600 border-b p-4 m-4 rounded grid place-items-center">
-	{% for webhook in webhook: %}
+	{% for webhook in webhooks: %}
 		<p class="font-semibold">{{ webhook }}</p>
 	{% endfor %}
 </div>

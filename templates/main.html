@@ -2,8 +2,6 @@
 
 {% block content %}
 <div class="bg-green-300 border-green-600 border-b p-4 m-4 rounded grid place-items-center">
-	<h1 class="text-3xl"> The email was sent to the following addresses</h1>
-	<br>
 	{% for webhook in webhook: %}
 		<p class="font-semibold">{{ webhook }}</p>
 	{% endfor %}

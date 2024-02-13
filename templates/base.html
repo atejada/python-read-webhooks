@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Webhooks</title>
+    <style>
+        .webhook {
+            padding: 10px;
+            margin: 5px;
+            background-color: #f3f3f3
+        }
+    </style>    
 </head>
 <body>
-<div id="container">
-    {% if messages %}
-      {% for message in messages %}
-        {{ message }}
-      {% endfor %}
-    {% endif %}
-  {% block content %}  
-  {% endblock %}
+<div id="content">
+    {% block content %} {% endblock %}
 </div>
 </body>
 </html>

@@ -42,10 +42,11 @@ def webhook():
     
         if not is_genuine:
             return "Signature verification failed!", 401
-            
+        print(is_genuine)
         query_params = {"calendar_id": os.environ['CALENDAR_ID']}
+        print(query_params)
         data = request.get_json()
-        print(data)
+        print(f"Data: {data}")
         event, _ = nylas.events.find(identifier = os.environ['GRANT_ID'], event_id = data.object.id, query_params = query_params)
         match event.when.object:
             case 'timespan':

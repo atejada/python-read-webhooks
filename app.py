@@ -41,6 +41,7 @@ def webhook():
             key=os.environ['CLIENT_SECRET'].encode("utf8"),
             signature=request.headers.get("X-Nylas-Signature")
         )
+        print(is_genuine)
     
         if not is_genuine:
             return "Signature verification failed!", 401

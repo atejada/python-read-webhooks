@@ -34,20 +34,18 @@ def webhook():
         return request.args["challenge"]
 
     if request.method == "POST":
-        print(os.environ['CLIENT_SECRET'].encode("utf8"))
-        print(request.headers.get("X-Nylas-Signature"))
         is_genuine = verify_signature(
             message=request.data,
             key=os.environ['CLIENT_SECRET'].encode("utf8"),
             signature=request.headers.get("X-Nylas-Signature")
         )
-        print(is_genuine)
     
         if not is_genuine:
             return "Signature verification failed!", 401
             
         query_params = {"calendar_id": os.environ['CALENDAR_ID']}
         data = request.get_json()
+        print(data)
         event, _ = nylas.events.find(identifier = os.environ['GRANT_ID'], event_id = data.object.id, query_params = query_params)
         match event.when.object:
             case 'timespan':

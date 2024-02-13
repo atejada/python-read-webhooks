@@ -1,10 +1,8 @@
-from flask import Flask, request, json, render_template
+from flask import Flask, request, render_template
 import hmac
 import hashlib
-import datetime
 import os
 from nylas import Client
-import os
 from dataclasses import dataclass
 import pendulum
 
@@ -52,6 +50,7 @@ def webhook():
         data = request.get_json()
         print(f"Data: {data}")
         event, _ = nylas.events.find(identifier = os.environ['GRANT_ID'], event_id = data["data"]["object"]["id"], query_params = query_params)
+        participant = ""
         match event.when.object:
             case 'timespan':
                 start_time = pendulum.from_timestamp(event.when.start_time, today.timezone.name).strftime("%d/%m/%Y at %H:%M:%S")
@@ -65,8 +64,9 @@ def webhook():
                 event_date = f"On: {event.when.date}" 
         for participant in event.participants:
             participant += f"{participant.email};"
+        participant = participant[:-1]
                 
-        hook = Webhook(event.id, event_date, event.title, event.description, participant[:-1], event.status)
+        hook = Webhook(event.id, event_date, event.title, event.description, participant, event.status)
         webhooks.append(hook)
         return "Webhook received", 200
 

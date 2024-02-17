@@ -62,7 +62,7 @@ def webhook():
                 event_date = f"On: {event.when.date}" 
         for participant in event.participants:
             participant += f"{participant.email};"
-        participant_list = participant[:-1]
+        participant_list = participant_list[:-1]
                 
         hook = Webhook(event.id, event_date, event.title, event.description, participant_list, event.status)
         webhooks.append(hook)

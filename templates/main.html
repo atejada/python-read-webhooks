@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="bg-green-300 border-green-600 border-b p-4 m-4 rounded grid place-items-center">
+<h1 class='h1'>Webhooks</h1>	
     {% for webhook in webhooks: %}
         <div class='webhook'>
             <p><b>Id:</b> {{ webhook._id }} | <b>Date:</b> {{ webhook.date }} |

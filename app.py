@@ -48,7 +48,7 @@ def webhook():
         query_params = {"calendar_id": os.environ['CALENDAR_ID']}
         data = request.get_json()
         event, _ = nylas.events.find(identifier = os.environ['GRANT_ID'], event_id = data["data"]["object"]["id"], query_params = query_params)
-        participant = ""
+        participant_list = ""
         match event.when.object:
             case 'timespan':
                 start_time = pendulum.from_timestamp(event.when.start_time, today.timezone.name).strftime("%d/%m/%Y at %H:%M:%S")
@@ -62,9 +62,9 @@ def webhook():
                 event_date = f"On: {event.when.date}" 
         for participant in event.participants:
             participant += f"{participant.email};"
-        participant = participant[:-1]
+        participant_list = participant[:-1]
                 
-        hook = Webhook(event.id, event_date, event.title, event.description, participant, event.status)
+        hook = Webhook(event.id, event_date, event.title, event.description, participant_list, event.status)
         webhooks.append(hook)
         return "Webhook received", 200
 

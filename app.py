@@ -36,6 +36,7 @@ def webhook():
         return request.args["challenge"]
 
     if request.method == "POST":
+        print("POST WEBHOOK")
         is_genuine = verify_signature(
             message=request.data,
             key=os.environ['CLIENT_SECRET'].encode("utf8"),

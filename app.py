@@ -45,28 +45,28 @@ def webhook():
     
         if not is_genuine:
             return "Signature verification failed!", 401
-        query_params = {"calendar_id": os.environ['CALENDAR_ID']}
+        #query_params = {"calendar_id": os.environ['CALENDAR_ID']}
         data = request.get_json()
         print(data)
-        event, _ = nylas.events.find(identifier = os.environ['GRANT_ID'], event_id = data["data"]["object"]["id"], query_params = query_params)
-        participant_list = ""
-        match event.when.object:
-            case 'timespan':
-                start_time = pendulum.from_timestamp(event.when.start_time, today.timezone.name).strftime("%d/%m/%Y at %H:%M:%S")
-                end_time = pendulum.from_timestamp(event.when.end_time, today.timezone.name).strftime("%d/%m/%Y at %H:%M:%S")
-                event_date = f"From: {start_time} to {end_time}"
-            case 'datespan':
-                start_time = pendulum.from_timestamp(event.when.start_date, today.timezone.name).strftime("%d/%m/%Y")
-                end_time = pendulum.from_timestamp(event.when.end_date, today.timezone.name).strftime("%d/%m/%Y")
-                event_date = f"From: {start_time} to {end_time}"
-            case 'date':
-                event_date = f"On: {event.when.date}" 
-        for participant in event.participants:
-            participant_list += f"{participant.email};"
-        participant_list = participant_list[:-1]
+        #event, _ = nylas.events.find(identifier = os.environ['GRANT_ID'], event_id = data["data"]["object"]["id"], query_params = query_params)
+        #participant_list = ""
+        #match event.when.object:
+        #    case 'timespan':
+        #        start_time = pendulum.from_timestamp(event.when.start_time, today.timezone.name).strftime("%d/%m/%Y at %H:%M:%S")
+        #        end_time = pendulum.from_timestamp(event.when.end_time, today.timezone.name).strftime("%d/%m/%Y at %H:%M:%S")
+        #        event_date = f"From: {start_time} to {end_time}"
+        #    case 'datespan':
+        #        start_time = pendulum.from_timestamp(event.when.start_date, today.timezone.name).strftime("%d/%m/%Y")
+        #        end_time = pendulum.from_timestamp(event.when.end_date, today.timezone.name).strftime("%d/%m/%Y")
+        #        event_date = f"From: {start_time} to {end_time}"
+        #    case 'date':
+        #        event_date = f"On: {event.when.date}" 
+        #for participant in event.participants:
+        #    participant_list += f"{participant.email};"
+        #participant_list = participant_list[:-1]
                 
-        hook = Webhook(event.id, event_date, event.title, event.description, participant_list, event.status)
-        webhooks.append(hook)
+        #hook = Webhook(event.id, event_date, event.title, event.description, participant_list, event.status)
+        #webhooks.append(hook)
         return "Webhook received", 200
 
 @app.route("/")

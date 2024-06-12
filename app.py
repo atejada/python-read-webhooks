@@ -47,6 +47,7 @@ def webhook():
             return "Signature verification failed!", 401
         query_params = {"calendar_id": os.environ['CALENDAR_ID']}
         data = request.get_json()
+        print(data)
         event, _ = nylas.events.find(identifier = os.environ['GRANT_ID'], event_id = data["data"]["object"]["id"], query_params = query_params)
         participant_list = ""
         match event.when.object:
